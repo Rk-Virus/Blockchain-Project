@@ -20,14 +20,14 @@ class BlockChain{
 
         // checking for each block 
         for(let i = 1; i < chain.length; i++){
-            const {timestamp, prevHash, hash, data} = chain[i]
+            const {timestamp, prevHash, hash, nonce, difficulty, data} = chain[i]
 
             // checking if linking is correct 
             const realPrevHash = chain[i-1].hash
             if (prevHash !== realPrevHash) return false
 
             // checking if hash encryption is correct
-            const validHash = cryptoHash(timestamp, prevHash, data)
+            const validHash = cryptoHash(timestamp, prevHash, nonce, difficulty, data)
             if (hash !== validHash) return false
         }
         return true
@@ -50,13 +50,13 @@ class BlockChain{
 const blockChain = new BlockChain()
 blockChain.addBlock({data:"new data"})
 blockChain.addBlock({data:"another data"})
-// console.log(blockChain)
+console.log(blockChain)
 
-const blockChain2 = new BlockChain()
-blockChain2.addBlock({data:"new data"})
+// const blockChain2 = new BlockChain()
+// blockChain2.addBlock({data:"new data"})
 
 // console.log(BlockChain.isValidChain(blockChain.chain))
-blockChain2.replaceChain(blockChain.chain)
-console.log(blockChain2)
+// blockChain2.replaceChain(blockChain.chain)
+// console.log(blockChain2)
 
 module.exports = BlockChain
